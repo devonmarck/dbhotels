@@ -40,10 +40,6 @@ create table funcionarios (
 /* descreve os campos da tabela funcionarios */
 describe funcionarios;
 
- 
-
- 
-
 /*Mostrar as tabelas */
 show tables;
 
@@ -52,7 +48,6 @@ show tables;
 /* CREATE */
 /* Inserir um novo funcionário na tabela, com nome, login, senha criptografada e cargo */ 
 insert into funcionarios(nomeFunc, login, senha, cargo) values ("Administrator", "admin", md5("admin"), "Administrador");
-insert into funcionarios(nomeFunc, login, senha, cargo) values ("Pamella Pereto", "pamellapereto", md5("123@senac"), "TI");
 insert into funcionarios(nomeFunc, login, senha, cargo) values ("Breno Silva", "brenosilva", md5("123@senac"), "Contabilidade");
 insert into funcionarios(nomeFunc, login, senha, cargo) values ("Victoria Cardoso", "victoriacardoso", md5("123@senac"), "RH");
 insert into funcionarios(nomeFunc, login, senha) values ("Laura Lopes", "lauralopes", md5("123@senac"));
@@ -66,12 +61,11 @@ select * from funcionarios;
 
  
 
- 
 
 /*UPDATE*/
 /* Atualizar o campo login na tabela funcionários especificando o id */
-update funcionarios set login = 'fellipecoelho' where idFunc = 7;
-update funcionarios set cargo = 'Gerência' where idFunc = 4;
+update funcionarios set login = 'fellipecoelho' where idFunc = 5;
+update funcionarios set cargo = 'Gerência' where idFunc = 5;
 
  
 
@@ -83,30 +77,6 @@ drop table funcionarios;
 /* Adicionar o campo email à tabela funcionarios */
 alter table funcionarios add column email varchar(50);
 
- 
-
-/*Modificar o campo email para que se torne obrigatório, ou seja, não nulo (not null) */
-alter table funcionarios modify column email varchar (50) not null;
-
- 
-
-/* Excluir um campo da tabela */
-alter table funcionarios drop column email;
-
- 
-
-/*Reposicionar o campo email para que ele fique após o campo login */
-alter table funcionarios modify column email varchar(50) not null after login;
-
- 
-
-update funcionarios set email = 'fellipecoelho@senacsp.edu.br' where idFunc = 7;
-update funcionarios set email = 'pamellapereto@senacsp.edu.br' where idFunc = 6;
-update funcionarios set email = 'lauralopes@senacsp.edu.br' where idFunc = 5;
-update funcionarios set email = 'victoriacardoso@senacsp.edu.br' where idFunc = 4;
-update funcionarios set email = 'brenosilva@senacsp.edu.br' where idFunc = 3;
-
- 
 
 /* Buscar o login e a senha da tabela funcionarios em que login seja admin e senha seja admin */
 select login as Login, senha from funcionarios where login = "admin" and senha = md5("admin");
@@ -135,7 +105,7 @@ select idFunc as ID_Funcionario, nomeFunc as Nome_Funcionarios, cargo as Cargo_F
 /* Buscar os campos ID com apelido ID_Funcionario, nomeFunc com o apelido Nome_Funcionario e cargo com o apelido Cargo_Funcionario da tabela funcionarios onde cargo seja diferente de nulo e ordenado de forma ascendente o ID (de maior para o menor) 
 <> ESTE SINAL SIGNIFICA DIFERENTE
 */
-select idFunc as ID_Funcionario, nomeFunc as Nome_Funcionario, cargo as Cargo_Funcionario from funcionarios where cargo <> 'null' order by idFunc desc;
+select idFunc as ID_Funcionario, nomeFunc as Nome_Funcionario, cargo as Cargo_Funcionario from funcionarios where cargo <> 'null' order by idFunc asc;
 
  
 
@@ -172,36 +142,40 @@ create table quartos (
 
     alter table quartos add column foto varchar(255) not null after descricao;
 
-    alter table quartos change cadeDaManha cafeDaManha varchar(3) not null;
+    alter table quartos change cadeDaManha cafeDaManha char(3) not null;
 
 update quartos set numeroQuarto = "506" where idQuarto = 2;
 
  
 
-insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, preco, tipoCama, varanda) values ("5º", "505", "Superior Premier", 3, "não", "Familiar", "O quarto de 26m² com piso frio, com varanda - vista bairro. Oferece ar condicionado individual, TV LCD 42’’, wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.", 750.90, "Queen", "sim");
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, tipoCama, varanda) values
+("5º", "505", "Superior Premier", 3, "não", "Familiar",
+"O quarto de 26m² com piso frio, com varanda - vista bairro. Oferece ar condicionado individual, TV LCD 42’’, wi-fi grátis, cofre digital, frigobar abastecido e banheiro
+com secador de cabelo e amenities e mesa de trabalho.", "https://pousadaportomare.com.br/wp-content/uploads/2022/08/tipos-de-quarto.jpg", 750.90, "sim", "Queen", "sim");
 
  
 
-insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, preco, tipoCama, varanda) values ("5º", "505", "Superior Premier Twin", 3, "não", "Familiar", " Podemos acomodar até 2 pessoas conforme disponibilidade em apartamento duplo twin.
-A 1º criança na mesma cama que os pais é cortesia até 6 anos.", 950.90, "King", "sim");
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, tipoCama, varanda) values
+("5º", "505", "Superior Premier Twin", 3, "não", "Familiar", " Podemos acomodar até 2 pessoas conforme disponibilidade em apartamento duplo twin.
+A 1º criança na mesma cama que os pais é cortesia até 6 anos.", "https://pousadaportomare.com.br/wp-content/uploads/2022/08/tipos-de-quarto.jpg", 950.90, "sim", "King", "sim");
 
  
 
-insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, preco, tipoCama, varanda) values ("4º", "409", "Quarto de Solteiro", 2, "sim", "Junior", "Quarto com uma cama de casal
-Os quartos contam com TV de tela plana, Frigobar, Wi-fi, e Ar-Condicionado. Para sua comodidade, são fornecidos produtos de banho de cortesia e secador de cabelo.", 550.90, "Solteiro tradicional", "sim");
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, tipoCama, varanda) values
+("4º", "409", "Quarto de Solteiro", 2, "sim", "Junior", "Quarto com uma cama de casal
+Os quartos contam com TV de tela plana, Frigobar, Wi-fi, e Ar-Condicionado. Para sua comodidade, são fornecidos produtos de banho de cortesia e secador de cabelo.",
+"https://pousadaportomare.com.br/wp-content/uploads/2022/08/tipos-de-quarto.jpg", 550.90, "não", "Solteiro tradicional", "sim");
+
+update quartos set numeroQuarto = 506 where idQuarto = 2;
+update quartos set foto = "https://pousadaportomare.com.br/wp-content/uploads/2022/08/tipos-de-quarto.jpg" where idQuarto = 1;
+update quartos set cafeDaManha = "sim" where idQuarto = 1;
+
+
+
 
  
 
 select * from quartos;
-
- 
-
-update quartos set cafeDaManha = "sim" where idQuarto = 1;
-
- 
-
-update quartos set foto = "https://pousadaportomare.com.br/wp-content/uploads/2022/08/tipos-de-quarto.jpg" where idQuarto = 1;
-
  
 
 select * from quartos where situacao = 'nao';
@@ -216,7 +190,7 @@ select * from quartos where varanda = 'sim' and cafeDaManha = 'sim' and situacao
 
  
 
-select * from quartos where situacao = 'nao' and preco < 700;
+select * from quartos where situacao = 'nao' and preco < 900;
 
  
 
@@ -258,16 +232,13 @@ drop table clientes;
 select * from clientes;
 
  
+describe clientes;
 
+/* A RESOLVER */
 /* Buscar TODAS AS INFORMAÇÕES da tabela quartos que está vinculada à tabela clientes pelo campo idQuarto */
-
- 
-
 select *
 from quartos inner join clientes
 on quartos.idQuarto = clientes.idQuarto;
-
- 
 
 /* Buscar o nome completo e o celular do cliente que alugou o quarto de número 505, pois a tabela está vinculada à tabela clientes pelo idQuarto */
 select clientes.nomeCompleto,
@@ -275,22 +246,15 @@ clientes.celular
 from quartos inner join clientes
 on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
 
- 
-
 /*Buscar o nome completo e data/horário do checkout do cliente que alugou o quarto de número 505 */
 select clientes.nomeCompleto as Nome, date_format(clientes.checkout, '%d/%m/%Y - %H:%i') from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
+/* */ 
 
- 
 
-describe clientes;
 
- 
 
 /*dataPedido timestamp default current_timestamp significa que a data do pedido será a mesma do sistema, ou seja, a data atual 
 statusPedido significa que a situação do pedido será uma das seguintes opções: Pendente, Finalizado, Cancelado */
-
- 
-
 create table pedido (
 	idPedido int primary key auto_increment,
     dataPedido timestamp default current_timestamp,
@@ -300,8 +264,8 @@ create table pedido (
 );
 
 /* ABERTURA DE PEDIDOS */
-insert into pedido (statuspedido, idcliente) values ("pendente", 1); 
-insert into pedido (statuspedido, idcliente) values ("pendente", 2);
+insert into pedido (statuspedido, idClientes) values ("pendente", 1); 
+insert into pedido (statuspedido, idClientes) values ("pendente", 2);
 
  select * from pedido;
 
@@ -310,5 +274,7 @@ idreserva int primary key auto_increment,
 idPedido int not null,
 idQuarto int not null,
 foreign key (idPedido) references pedido(idPedido),
-foreign key (idQuarto) references Quartos(idQuarto)
+foreign key (idQuarto) references quartos(idQuarto)
 );
+
+describe reservas;
